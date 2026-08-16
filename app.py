@@ -25,17 +25,26 @@ if API_KEY:
 
 
 def main():
+    if "view" not in st.session_state:
+        st.session_state["view"] = "landing"
+
+    is_workspace = st.session_state.get("view") == "workspace"
+
     st.set_page_config(
-        page_title="PaperMiner — Enterprise Research Intelligence",
+        page_title="PaperMiner — Autonomous Multi-Agent Research Platform",
         page_icon="⚡",
         layout="wide",
-        initial_sidebar_state="expanded",
+        initial_sidebar_state="expanded" if is_workspace else "collapsed",
     )
 
     _inject_design_system()
-    _render_top_navigation()
-    _render_sidebar()
-    _render_workspace()
+
+    if not is_workspace:
+        _render_landing_page()
+    else:
+        _render_top_navigation()
+        _render_sidebar()
+        _render_workspace()
 
 
 # ══════════════════════════════════════════════════════════
@@ -334,23 +343,200 @@ def _inject_design_system():
 
 # ══════════════════════════════════════════════════════════
 # ══════════════════════════════════════════════════════════
-# TOP NAVIGATION
+# ══════════════════════════════════════════════════════════
+# LANDING PAGE VIEW
+# ══════════════════════════════════════════════════════════
+
+def _render_landing_page():
+    # Landing Header
+    c_brand, c_cta = st.columns([3, 1.2])
+    with c_brand:
+        st.markdown(
+            '<div style="display: flex; align-items: baseline; gap: 0.75rem; padding-bottom: 0.5rem;">'
+            '<span style="font-size: 1.45rem; font-weight: 700; color: #FFFFFF; letter-spacing: -0.02em;">PaperMiner</span>'
+            '<span style="font-size: 0.8rem; color: #818CF8; font-weight: 500;">Research Agents Hackathon</span>'
+            '</div>',
+            unsafe_allow_html=True,
+        )
+    with c_cta:
+        if st.button("Launch Workspace →", type="primary", use_container_width=True, key="landing_top_launch"):
+            st.session_state["view"] = "workspace"
+            st.rerun()
+
+    st.markdown("<div style='height: 1rem;'></div>", unsafe_allow_html=True)
+
+    # Hero Section
+    st.markdown("""
+    <div class="hero-container">
+        <div class="hero-badge">● Autonomous 9-Agent Collaborative System</div>
+        <div class="hero-title">Automate Scientific Literature Mining, Evidence Verification & Systematic Review</div>
+        <div class="hero-subtitle">
+            Transform weeks of manual literature review into 60 seconds of auditable science. PaperMiner coordinates 9 specialized AI agents to extract structured findings, stress-test evidence, highlight citations directly on PDF pages, and generate publication-ready PRISMA systematic reviews.
+        </div>
+    </div>
+    """, unsafe_allow_html=True)
+
+    # Big CTA Bar
+    col_l1, col_l2, col_l3 = st.columns([1.5, 1.6, 1])
+    with col_l1:
+        if st.button("🚀 Launch PaperMiner Workspace", type="primary", use_container_width=True, key="hero_main_launch"):
+            st.session_state["view"] = "workspace"
+            st.rerun()
+    with col_l2:
+        if st.button("⚡ Run 1-Click Benchmark (Attention Is All You Need)", use_container_width=True, key="hero_demo_launch"):
+            st.session_state["view"] = "workspace"
+            sample_attention = Path("sample_papers/attention_is_all_you_need.pdf")
+            if sample_attention.exists():
+                _run_single_pipeline(str(sample_attention))
+            else:
+                from tools.arxiv_fetcher import fetch_arxiv_pdf
+                local_path, _ = fetch_arxiv_pdf("1706.03762")
+                _run_single_pipeline(local_path)
+            st.rerun()
+    with col_l3:
+        st.link_button("GitHub Repo", "https://github.com/Pratik-Shirodkar/PaperMiner", use_container_width=True)
+
+    st.markdown("<div style='height: 2.25rem;'></div>", unsafe_allow_html=True)
+
+    # The 9-Agent Mesh Overview
+    st.markdown("### 🧬 9-Agent Collaborative Architecture")
+    st.caption("Each agent executes a distinct responsibility with deterministic tool execution, evidence cross-examination, and active recovery.")
+
+    a_cols1 = st.columns(3)
+    agents_data_1 = [
+        ("📋 Pipeline Coordinator", "Orchestrates multi-agent execution, manages state transitions, and executes automated low-confidence recovery loops."),
+        ("📄 Document Parser", "Extracts complex layouts, multi-column tables, captions, and section hierarchies via PyMuPDF without LLM token waste."),
+        ("🧬 Schema Architect", "Auto-detects scientific domains from abstracts or translates natural language queries into typed Pydantic v2 schemas."),
+    ]
+    for col, (title, desc) in zip(a_cols1, agents_data_1):
+        with col:
+            st.markdown(f"""
+            <div class="feature-card">
+                <div class="feature-title">{title}</div>
+                <div class="feature-desc">{desc}</div>
+            </div>
+            """, unsafe_allow_html=True)
+
+    st.markdown("<div style='height: 0.75rem;'></div>", unsafe_allow_html=True)
+    a_cols2 = st.columns(3)
+    agents_data_2 = [
+        ("🔍 Data Extractor", "Performs two-pass schema-guided data extraction across text and tables with exact coordinate and page citations."),
+        ("👁️ Chart Vision Engine", "Leverages Gemini Multimodal Vision to extract numerical points directly from raster plots, scatter charts, and figures."),
+        ("🔗 Bibliography Auditor", "Cross-checks referenced citations against the primary document bibliography to detect hallucinated sources."),
+    ]
+    for col, (title, desc) in zip(a_cols2, agents_data_2):
+        with col:
+            st.markdown(f"""
+            <div class="feature-card">
+                <div class="feature-title">{title}</div>
+                <div class="feature-desc">{desc}</div>
+            </div>
+            """, unsafe_allow_html=True)
+
+    st.markdown("<div style='height: 0.75rem;'></div>", unsafe_allow_html=True)
+    a_cols3 = st.columns(3)
+    agents_data_3 = [
+        ("✅ Cross-Validator", "Audits every extracted metric against raw source text, assigning HIGH/MED/LOW confidence scores."),
+        ("🛡️ Adversarial Red-Team", "Stress-tests extractions against prompt injections, ablation traps, and baseline misattributions, awarding Integrity Certificates."),
+        ("🧠 Hypothesis Engine", "Synthesizes empirical findings to formulate falsifiable scientific hypotheses, experimental protocols, and research blindspots."),
+    ]
+    for col, (title, desc) in zip(a_cols3, agents_data_3):
+        with col:
+            st.markdown(f"""
+            <div class="feature-card">
+                <div class="feature-title">{title}</div>
+                <div class="feature-desc">{desc}</div>
+            </div>
+            """, unsafe_allow_html=True)
+
+    st.markdown("<div style='height: 2.5rem;'></div>", unsafe_allow_html=True)
+
+    # Breakthrough Capabilities Matrix
+    st.markdown("### 💎 Enterprise Capabilities & Breakthrough Pillars")
+    
+    f_cols = st.columns(4)
+    with f_cols[0]:
+        st.markdown("""
+        <div class="feature-card">
+            <div class="feature-icon">🛡️</div>
+            <div class="feature-title">Red-Team Audit</div>
+            <div class="feature-desc">Active adversarial attacks to ensure 100% auditable truth with zero hallucinations.</div>
+        </div>
+        """, unsafe_allow_html=True)
+    with f_cols[1]:
+        st.markdown("""
+        <div class="feature-card">
+            <div class="feature-icon">👁️</div>
+            <div class="feature-title">Evidence Grounding</div>
+            <div class="feature-desc">Translucent glowing neon bounding boxes drawn directly on high-res PDF pages.</div>
+        </div>
+        """, unsafe_allow_html=True)
+    with f_cols[2]:
+        st.markdown("""
+        <div class="feature-card">
+            <div class="feature-icon">💬</div>
+            <div class="feature-title">Research Co-Pilot</div>
+            <div class="feature-desc">Conversational multi-hop scientific query engine grounded strictly in verified data.</div>
+        </div>
+        """, unsafe_allow_html=True)
+    with f_cols[3]:
+        st.markdown("""
+        <div class="feature-card">
+            <div class="feature-icon">📊</div>
+            <div class="feature-title">PRISMA 2020 Studio</div>
+            <div class="feature-desc">Publication-ready systematic review flow diagrams required by Nature and Cochrane.</div>
+        </div>
+        """, unsafe_allow_html=True)
+
+    st.markdown("<div style='height: 2rem;'></div>", unsafe_allow_html=True)
+
+    # Bottom Launch Callout
+    st.markdown("""
+    <div style="background: linear-gradient(135deg, rgba(99, 102, 241, 0.12) 0%, rgba(16, 185, 129, 0.08) 100%); border: 1px solid rgba(99, 102, 241, 0.3); border-radius: 12px; padding: 1.75rem; text-align: center;">
+        <div style="font-size: 1.3rem; font-weight: 700; color: #FFFFFF; margin-bottom: 0.4rem;">Ready to Accelerate Your Systematic Review?</div>
+        <div style="font-size: 0.88rem; color: #9CA3AF; margin-bottom: 1.25rem;">Extract verified benchmark datasets from your PDFs or stream directly from arXiv in seconds.</div>
+    </div>
+    """, unsafe_allow_html=True)
+    
+    st.markdown("<div style='height: 0.75rem;'></div>", unsafe_allow_html=True)
+    _, c_bot_btn, _ = st.columns([1, 2, 1])
+    with c_bot_btn:
+        if st.button("Launch PaperMiner Workspace Now →", type="primary", use_container_width=True, key="bottom_launch_btn"):
+            st.session_state["view"] = "workspace"
+            st.rerun()
+
+
+# ══════════════════════════════════════════════════════════
+# TOP NAVIGATION (WORKSPACE)
 # ══════════════════════════════════════════════════════════
 
 def _render_top_navigation():
-    st.markdown(
-        '<div class="top-nav">'
-        '<div class="brand-title">'
-        '<span>PaperMiner</span>'
-        '<span class="brand-subtitle">Automated Data Extraction & Systematic Review Suite</span>'
-        '</div>'
-        '<div class="status-indicator">'
-        '<div class="status-dot"></div>'
-        '<span>Workspace Ready</span>'
-        '</div>'
-        '</div>',
-        unsafe_allow_html=True,
-    )
+    c_nav_left, c_nav_right = st.columns([3.5, 1.2])
+    with c_nav_left:
+        st.markdown(
+            '<div class="top-nav" style="border-bottom: none; margin-bottom: 0; padding-bottom: 0;">'
+            '<div class="brand-title">'
+            '<span>PaperMiner</span>'
+            '<span class="brand-subtitle">Automated Data Extraction & Systematic Review Suite</span>'
+            '</div>'
+            '</div>',
+            unsafe_allow_html=True,
+        )
+    with c_nav_right:
+        col_st, col_back = st.columns([1.2, 1])
+        with col_st:
+            st.markdown("""
+            <div style="display: flex; align-items: center; gap: 0.4rem; font-size: 0.78rem; color: #9CA3AF; padding-top: 0.5rem;">
+                <div style="width: 6px; height: 6px; border-radius: 50%; background-color: #10B981;"></div>
+                <span>Workspace Ready</span>
+            </div>
+            """, unsafe_allow_html=True)
+        with col_back:
+            if st.button("← Overview", use_container_width=True, key="nav_back_landing"):
+                st.session_state["view"] = "landing"
+                st.rerun()
+
+    st.markdown("<div style='border-bottom: 1px solid rgba(255, 255, 255, 0.08); margin-bottom: 1.25rem; margin-top: 0.5rem;'></div>", unsafe_allow_html=True)
 
 
 # ══════════════════════════════════════════════════════════
@@ -497,89 +683,6 @@ def _render_agent_mesh(placeholder=None):
 
 def _render_workspace():
     mode = st.session_state.get("mode", "Single Paper")
-    has_results = "results" in st.session_state and st.session_state.results is not None
-
-    if not has_results:
-        # Hero Section
-        st.markdown("""
-        <div class="hero-container">
-            <div class="hero-badge">● 9-Agent Collaborative Mesh · Research Agents Hackathon</div>
-            <div class="hero-title">Autonomous Research Literature Mining & Systematic Review</div>
-            <div class="hero-subtitle">
-                Transform dense scientific papers into verified structured findings, coordinate-grounded visual proofs, testable scientific hypotheses, and PRISMA 2020 systematic review flowcharts in seconds.
-            </div>
-        </div>
-        """, unsafe_allow_html=True)
-
-        # 4 Core Pillar Cards
-        c1, c2, c3, c4 = st.columns(4)
-        with c1:
-            st.markdown("""
-            <div class="feature-card">
-                <div class="feature-icon">🛡️</div>
-                <div class="feature-title">Red-Team Audit</div>
-                <div class="feature-desc">Active adversarial stress-testing against ablation traps and baseline misattributions.</div>
-            </div>
-            """, unsafe_allow_html=True)
-        with c2:
-            st.markdown("""
-            <div class="feature-card">
-                <div class="feature-icon">👁️</div>
-                <div class="feature-title">Visual Grounding</div>
-                <div class="feature-desc">Translucent glowing bounding boxes drawn directly on high-resolution source PDF pages.</div>
-            </div>
-            """, unsafe_allow_html=True)
-        with c3:
-            st.markdown("""
-            <div class="feature-card">
-                <div class="feature-icon">🧠</div>
-                <div class="feature-title">Hypothesis Engine</div>
-                <div class="feature-desc">Autonomous formulation of falsifiable scientific hypotheses and experimental protocols.</div>
-            </div>
-            """, unsafe_allow_html=True)
-        with c4:
-            st.markdown("""
-            <div class="feature-card">
-                <div class="feature-icon">📊</div>
-                <div class="feature-title">PRISMA 2020</div>
-                <div class="feature-desc">Publication-ready systematic review flowcharts reporting screening and inclusion.</div>
-            </div>
-            """, unsafe_allow_html=True)
-
-        st.markdown("<div style='height: 16px;'></div>", unsafe_allow_html=True)
-
-        # 1-Click Quickstart Showcase Bar
-        st.markdown("##### ⚡ 1-Click Quickstart Benchmark")
-        st.caption("Test PaperMiner instantly on benchmark literature with zero configuration:")
-        
-        q_cols = st.columns(3)
-        sample_attention = Path("sample_papers/attention_is_all_you_need.pdf")
-        
-        with q_cols[0]:
-            if st.button("🚀 Attention Is All You Need (ML Benchmarks)", use_container_width=True):
-                if sample_attention.exists():
-                    _run_single_pipeline(str(sample_attention))
-                else:
-                    from tools.arxiv_fetcher import fetch_arxiv_pdf
-                    local_path, _ = fetch_arxiv_pdf("1706.03762")
-                    _run_single_pipeline(local_path)
-
-        with q_cols[1]:
-            if st.button("🩺 Clinical Trial Benchmark (Auto-Detect)", use_container_width=True):
-                from tools.arxiv_fetcher import fetch_arxiv_pdf
-                local_path, _ = fetch_arxiv_pdf("2303.08774")  # Clinical trial LLM paper
-                _run_single_pipeline(local_path)
-
-        with q_cols[2]:
-            if st.button("💎 Materials Science Benchmark (Auto-Detect)", use_container_width=True):
-                from tools.arxiv_fetcher import fetch_arxiv_pdf
-                local_path, _ = fetch_arxiv_pdf("2307.12008")  # Condensed matter superconductor paper
-                _run_single_pipeline(local_path)
-
-        st.markdown("<div style='height: 16px;'></div>", unsafe_allow_html=True)
-
-    # Ingestion Console Header
-    st.markdown("##### Document Ingestion & Live Stream")
 
     # Ingestion Tabs
     tab_upload, tab_arxiv = st.tabs(["Document Ingestion", "arXiv Direct Stream"])
