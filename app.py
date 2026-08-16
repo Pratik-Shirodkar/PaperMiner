@@ -355,7 +355,7 @@ def _render_landing_page():
             <div style="width: 34px; height: 34px; border-radius: 9px; background: linear-gradient(135deg, #6366F1, #10B981); display: flex; align-items: center; justify-content: center; font-size: 1.05rem; box-shadow: 0 0 16px rgba(99, 102, 241, 0.45);">⚡</div>
             <div>
                 <span style="font-size: 1.4rem; font-weight: 700; color: #FFFFFF; letter-spacing: -0.03em;">PaperMiner</span>
-                <span style="font-size: 0.75rem; color: #818CF8; font-weight: 600; margin-left: 0.5rem; background: rgba(99, 102, 241, 0.12); padding: 0.18rem 0.55rem; border-radius: 12px; border: 1px solid rgba(99, 102, 241, 0.28);">Research Agents Suite</span>
+                <span style="font-size: 0.75rem; color: #818CF8; font-weight: 600; margin-left: 0.5rem; background: rgba(99, 102, 241, 0.12); padding: 0.18rem 0.55rem; border-radius: 12px; border: 1px solid rgba(99, 102, 241, 0.28);">Autonomous Research Platform</span>
             </div>
         </div>
         """, unsafe_allow_html=True)
@@ -632,7 +632,7 @@ def _render_landing_page():
 <div class="landing-hero">
     <div class="landing-eyebrow">
         <div class="landing-eyebrow-dot"></div>
-        9 Collaborating AI Agents &middot; Research Agents Hackathon
+        9 Collaborating AI Agents &middot; Multi-Agent Evidence Extraction
     </div>
     <div class="landing-headline">
         Turn 30-Page Research Papers into<br><span>Verified, Actionable Data in 60 Seconds</span>
