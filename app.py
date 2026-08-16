@@ -252,6 +252,72 @@ def _inject_design_system():
         border: 1px solid rgba(16, 185, 129, 0.3);
     }
 
+    /* Hero Banner & Landing Showcase */
+    .hero-container {
+        background: linear-gradient(180deg, rgba(18, 24, 36, 0.8) 0%, rgba(10, 13, 20, 0.95) 100%);
+        border: 1px solid var(--border-subtle);
+        border-radius: 12px;
+        padding: 1.75rem 2rem 1.5rem 2rem;
+        margin-bottom: 1.5rem;
+        text-align: left;
+    }
+    .hero-badge {
+        display: inline-flex;
+        align-items: center;
+        gap: 0.4rem;
+        font-size: 0.72rem;
+        font-weight: 600;
+        text-transform: uppercase;
+        letter-spacing: 0.08em;
+        background: rgba(99, 102, 241, 0.12);
+        color: #818CF8;
+        padding: 0.22rem 0.65rem;
+        border-radius: 20px;
+        border: 1px solid rgba(99, 102, 241, 0.3);
+        margin-bottom: 0.75rem;
+    }
+    .hero-title {
+        font-size: 1.85rem;
+        font-weight: 700;
+        letter-spacing: -0.03em;
+        color: #FFFFFF;
+        line-height: 1.25;
+        margin-bottom: 0.5rem;
+    }
+    .hero-subtitle {
+        font-size: 0.92rem;
+        color: var(--text-secondary);
+        line-height: 1.55;
+        max-width: 850px;
+    }
+    .feature-card {
+        background: var(--bg-surface);
+        border: 1px solid var(--border-subtle);
+        border-radius: 10px;
+        padding: 1rem 1.15rem;
+        height: 100%;
+        transition: all 0.2s ease;
+    }
+    .feature-card:hover {
+        border-color: rgba(99, 102, 241, 0.4);
+        transform: translateY(-2px);
+    }
+    .feature-icon {
+        font-size: 1.2rem;
+        margin-bottom: 0.4rem;
+    }
+    .feature-title {
+        font-size: 0.9rem;
+        font-weight: 600;
+        color: #F3F4F6;
+        margin-bottom: 0.3rem;
+    }
+    .feature-desc {
+        font-size: 0.8rem;
+        color: var(--text-muted);
+        line-height: 1.45;
+    }
+
     /* Sidebar Background & Width */
     section[data-testid="stSidebar"] {
         background-color: #0E131F;
@@ -431,6 +497,89 @@ def _render_agent_mesh(placeholder=None):
 
 def _render_workspace():
     mode = st.session_state.get("mode", "Single Paper")
+    has_results = "results" in st.session_state and st.session_state.results is not None
+
+    if not has_results:
+        # Hero Section
+        st.markdown("""
+        <div class="hero-container">
+            <div class="hero-badge">● 9-Agent Collaborative Mesh · Research Agents Hackathon</div>
+            <div class="hero-title">Autonomous Research Literature Mining & Systematic Review</div>
+            <div class="hero-subtitle">
+                Transform dense scientific papers into verified structured findings, coordinate-grounded visual proofs, testable scientific hypotheses, and PRISMA 2020 systematic review flowcharts in seconds.
+            </div>
+        </div>
+        """, unsafe_allow_html=True)
+
+        # 4 Core Pillar Cards
+        c1, c2, c3, c4 = st.columns(4)
+        with c1:
+            st.markdown("""
+            <div class="feature-card">
+                <div class="feature-icon">🛡️</div>
+                <div class="feature-title">Red-Team Audit</div>
+                <div class="feature-desc">Active adversarial stress-testing against ablation traps and baseline misattributions.</div>
+            </div>
+            """, unsafe_allow_html=True)
+        with c2:
+            st.markdown("""
+            <div class="feature-card">
+                <div class="feature-icon">👁️</div>
+                <div class="feature-title">Visual Grounding</div>
+                <div class="feature-desc">Translucent glowing bounding boxes drawn directly on high-resolution source PDF pages.</div>
+            </div>
+            """, unsafe_allow_html=True)
+        with c3:
+            st.markdown("""
+            <div class="feature-card">
+                <div class="feature-icon">🧠</div>
+                <div class="feature-title">Hypothesis Engine</div>
+                <div class="feature-desc">Autonomous formulation of falsifiable scientific hypotheses and experimental protocols.</div>
+            </div>
+            """, unsafe_allow_html=True)
+        with c4:
+            st.markdown("""
+            <div class="feature-card">
+                <div class="feature-icon">📊</div>
+                <div class="feature-title">PRISMA 2020</div>
+                <div class="feature-desc">Publication-ready systematic review flowcharts reporting screening and inclusion.</div>
+            </div>
+            """, unsafe_allow_html=True)
+
+        st.markdown("<div style='height: 16px;'></div>", unsafe_allow_html=True)
+
+        # 1-Click Quickstart Showcase Bar
+        st.markdown("##### ⚡ 1-Click Quickstart Benchmark")
+        st.caption("Test PaperMiner instantly on benchmark literature with zero configuration:")
+        
+        q_cols = st.columns(3)
+        sample_attention = Path("sample_papers/attention_is_all_you_need.pdf")
+        
+        with q_cols[0]:
+            if st.button("🚀 Attention Is All You Need (ML Benchmarks)", use_container_width=True):
+                if sample_attention.exists():
+                    _run_single_pipeline(str(sample_attention))
+                else:
+                    from tools.arxiv_fetcher import fetch_arxiv_pdf
+                    local_path, _ = fetch_arxiv_pdf("1706.03762")
+                    _run_single_pipeline(local_path)
+
+        with q_cols[1]:
+            if st.button("🩺 Clinical Trial Benchmark (Auto-Detect)", use_container_width=True):
+                from tools.arxiv_fetcher import fetch_arxiv_pdf
+                local_path, _ = fetch_arxiv_pdf("2303.08774")  # Clinical trial LLM paper
+                _run_single_pipeline(local_path)
+
+        with q_cols[2]:
+            if st.button("💎 Materials Science Benchmark (Auto-Detect)", use_container_width=True):
+                from tools.arxiv_fetcher import fetch_arxiv_pdf
+                local_path, _ = fetch_arxiv_pdf("2307.12008")  # Condensed matter superconductor paper
+                _run_single_pipeline(local_path)
+
+        st.markdown("<div style='height: 16px;'></div>", unsafe_allow_html=True)
+
+    # Ingestion Console Header
+    st.markdown("##### Document Ingestion & Live Stream")
 
     # Ingestion Tabs
     tab_upload, tab_arxiv = st.tabs(["Document Ingestion", "arXiv Direct Stream"])
