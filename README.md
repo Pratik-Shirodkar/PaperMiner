@@ -10,9 +10,16 @@
 
 Researchers conducting systematic reviews spend weeks manually extracting structured findings—experimental benchmarks, clinical trial endpoints, material properties—from PDF papers into spreadsheets. PaperMiner automates this end-to-end with **eight collaborating AI agents**.
 
-The **Parser Agent** extracts layouts, multi-column tables, and captions via PyMuPDF. The **Extractor Agent** reads tables and prose to fill structured schemas, citing exact source locations. The **Validator Agent** cross-checks extractions against raw text, triggering automatic re-extraction upon detecting low confidence.
-
-Crucially, the **Adversarial Red-Team Auditor** actively stress-tests extractions against ablation traps, baseline misattributions, and cherry-picked metrics, issuing an **Auditable Data Integrity Certificate**. The **Vision Agent** extracts data from complex figures and charts using Gemini Multimodal Vision. The **Citation Agent** verifies bibliography citations. The **Schema Builder** auto-detects paper domains or translates natural language into typed Pydantic schemas. In batch mode, the **Synthesis Agent** performs automated cross-paper meta-analysis, generating comparison matrices, consensus takeaways, and interactive Plotly visualizations (forest plots and benchmark charts).
+- **1-Click arXiv Direct Ingestion**: Stream papers instantly by arXiv ID (e.g. `1706.03762`), URL, or keyword search.
+- **Auto-Detect Domain & Natural Language Schema Builder**: Formulates custom typed Pydantic extraction schemas from scratch.
+- **Multimodal Chart & Figure Vision**: Extracts numerical metrics from raster plots and scatter graphs using Gemini Multimodal Vision.
+- **Adversarial Red-Team Auditor**: Stress-tests extractions against ablation traps and baseline misattributions; awards an **Auditable Data Integrity Certificate**.
+- **Interactive Evidence Grounding Inspector**: Renders high-res PDF pages with neon glowing bounding boxes directly around cited source evidence.
+- **🧠 Autonomous Hypothesis & Research Gap Engine**: Formulates falsifiable scientific hypotheses, experimental protocols, and detects literature blindspots.
+- **💬 Grounded Research Co-Pilot**: Interactive conversational Q&A operating directly over the verified extracted database with exact citations.
+- **📊 Publication-Ready PRISMA 2020 Systematic Review Diagram**: Standardized flow diagram required by Nature, Cochrane, and top peer-reviewed journals.
+- **Cross-Paper Meta-Analysis**: Generates comparison matrices and interactive Plotly benchmark / forest plots.
+- **5 Publication Export Formats**: JSON, CSV, Excel (`.xlsx`), LaTeX (`.tex`), and Markdown Audit Ledger.
 
 With **1-Click arXiv ingestion** and an **Interactive Visual Grounding Inspector** highlighting source evidence directly on PDF pages, PaperMiner delivers verifiable, audit-ready data in 5 export formats (JSON/CSV/Excel/LaTeX/Markdown). Average cost: ~$0.015/paper.
 
