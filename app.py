@@ -753,10 +753,10 @@ def _render_grounding_view(results: dict):
 
         col_img, col_meta = st.columns([2.5, 1])
         with col_img:
-            with st.spinner(f"Rendering PDF page {page_num}..."):
+            with st.spinner(f"Locating and rendering evidence for {loc}..."):
                 img_bytes = render_page_with_highlights(pdf_path, page_num, keywords)
                 if img_bytes:
-                    st.image(img_bytes, caption=f"PDF Source Page {page_num}", use_container_width=True)
+                    st.image(img_bytes, caption=f"PDF Source Evidence ({loc})", use_container_width=True)
                 else:
                     st.warning("Could not render page image.")
         with col_meta:
