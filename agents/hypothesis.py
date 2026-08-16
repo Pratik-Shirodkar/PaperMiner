@@ -7,6 +7,7 @@ falsifiable scientific hypotheses, unexplored mechanisms, and experimental proto
 from typing import Any, Optional
 from agents.base import BaseAgent
 from schemas.base import ExtractionSchema
+from utils.cost_tracker import CostTracker
 
 
 class HypothesisAgent(BaseAgent):
@@ -16,10 +17,15 @@ class HypothesisAgent(BaseAgent):
     quantify research blindspots, and design validation experiments.
     """
 
-    def __init__(self, model_name: str = "gemini-flash-latest"):
+    def __init__(
+        self,
+        cost_tracker: Optional[CostTracker] = None,
+        model_name: str = "gemini-flash-latest",
+    ):
         super().__init__(
             name="Hypothesis Generator",
             role="Autonomous Scientific Hypothesis & Research Gap Engine",
+            cost_tracker=cost_tracker,
             model_name=model_name,
         )
 

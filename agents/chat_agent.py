@@ -6,6 +6,7 @@ and PDF context with exact citations, confidence traces, and data synthesis.
 
 from typing import Any, Optional
 from agents.base import BaseAgent
+from utils.cost_tracker import CostTracker
 
 
 class ResearchCopilotAgent(BaseAgent):
@@ -13,10 +14,15 @@ class ResearchCopilotAgent(BaseAgent):
     Evidence-grounded conversational co-pilot for querying extracted datasets.
     """
 
-    def __init__(self, model_name: str = "gemini-flash-latest"):
+    def __init__(
+        self,
+        cost_tracker: Optional[CostTracker] = None,
+        model_name: str = "gemini-flash-latest",
+    ):
         super().__init__(
             name="Research Co-Pilot",
             role="Evidence-Grounded Scientific Q&A Engine",
+            cost_tracker=cost_tracker,
             model_name=model_name,
         )
 
