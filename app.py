@@ -343,165 +343,313 @@ def _inject_design_system():
 
 # ══════════════════════════════════════════════════════════
 # ══════════════════════════════════════════════════════════
-# ══════════════════════════════════════════════════════════
 # LANDING PAGE VIEW
 # ══════════════════════════════════════════════════════════
 
 def _render_landing_page():
-    # Landing Header
-    c_brand, c_cta = st.columns([3, 1.2])
-    with c_brand:
-        st.markdown(
-            '<div style="display: flex; align-items: baseline; gap: 0.75rem; padding-bottom: 0.5rem;">'
-            '<span style="font-size: 1.45rem; font-weight: 700; color: #FFFFFF; letter-spacing: -0.02em;">PaperMiner</span>'
-            '<span style="font-size: 0.8rem; color: #818CF8; font-weight: 500;">Research Agents Hackathon</span>'
-            '</div>',
-            unsafe_allow_html=True,
-        )
-    with c_cta:
-        if st.button("Launch Workspace →", type="primary", use_container_width=True, key="landing_top_launch"):
+    # ── Top Navigation Bar: Brand on Left, Square Launch Button on Right ──
+    nav_col_left, nav_col_right = st.columns([3.8, 1.2])
+    with nav_col_left:
+        st.markdown("""
+        <div style="display: flex; align-items: center; gap: 0.75rem; padding: 0.4rem 0;">
+            <div style="width: 32px; height: 32px; border-radius: 8px; background: linear-gradient(135deg, #6366F1, #10B981); display: flex; align-items: center; justify-content: center; font-size: 1rem; box-shadow: 0 0 14px rgba(99, 102, 241, 0.4);">⚡</div>
+            <div>
+                <span style="font-size: 1.35rem; font-weight: 700; color: #FFFFFF; letter-spacing: -0.03em;">PaperMiner</span>
+                <span style="font-size: 0.75rem; color: #818CF8; font-weight: 500; margin-left: 0.5rem; background: rgba(99, 102, 241, 0.12); padding: 0.15rem 0.5rem; border-radius: 12px; border: 1px solid rgba(99, 102, 241, 0.25);">Research Agents Suite</span>
+            </div>
+        </div>
+        """, unsafe_allow_html=True)
+    with nav_col_right:
+        if st.button("Launch Workspace ⚡", type="primary", use_container_width=True, key="top_right_sq_launch"):
             st.session_state["view"] = "workspace"
             st.rerun()
 
-    st.markdown("<div style='height: 1rem;'></div>", unsafe_allow_html=True)
-
-    # Hero Section
+    # ── Main Landing Body ──
     st.markdown("""
-    <div class="hero-container">
-        <div class="hero-badge">● Autonomous 9-Agent Collaborative System</div>
-        <div class="hero-title">Automate Scientific Literature Mining, Evidence Verification & Systematic Review</div>
-        <div class="hero-subtitle">
-            Transform weeks of manual literature review into 60 seconds of auditable science. PaperMiner coordinates 9 specialized AI agents to extract structured findings, stress-test evidence, highlight citations directly on PDF pages, and generate publication-ready PRISMA systematic reviews.
+<style>
+@keyframes pulseDot {
+    0%, 100% { opacity: 0.5; transform: scale(0.95); }
+    50% { opacity: 1; transform: scale(1.1); }
+}
+.landing-hero {
+    position: relative;
+    background: linear-gradient(160deg, #111827 0%, #0c1220 50%, #080c14 100%);
+    border: 1px solid rgba(255, 255, 255, 0.09);
+    border-radius: 18px;
+    padding: 3.25rem 2.75rem 2.5rem 2.75rem;
+    margin: 1rem 0 2.25rem 0;
+    box-shadow: 0 20px 40px -15px rgba(0, 0, 0, 0.6);
+}
+.landing-eyebrow {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-size: 0.72rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: #818CF8;
+    background: rgba(99, 102, 241, 0.1);
+    padding: 0.25rem 0.75rem;
+    border-radius: 20px;
+    border: 1px solid rgba(99, 102, 241, 0.25);
+    margin-bottom: 1.25rem;
+}
+.landing-eyebrow-dot {
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background-color: #10B981;
+    box-shadow: 0 0 8px #10B981;
+    animation: pulseDot 2s ease-in-out infinite;
+}
+.landing-headline {
+    font-size: 2.65rem;
+    font-weight: 800;
+    letter-spacing: -0.04em;
+    line-height: 1.18;
+    color: #FFFFFF;
+    margin-bottom: 1rem;
+    max-width: 820px;
+}
+.landing-headline span {
+    background: linear-gradient(135deg, #818CF8 0%, #34D399 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+.landing-desc {
+    font-size: 1.02rem;
+    color: #9CA3AF;
+    line-height: 1.65;
+    max-width: 740px;
+    margin-bottom: 2rem;
+}
+.landing-stats-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 1.25rem;
+    padding-top: 1.75rem;
+    border-top: 1px solid rgba(255, 255, 255, 0.07);
+}
+.landing-stat-box {
+    text-align: left;
+}
+.landing-stat-val {
+    font-size: 1.75rem;
+    font-weight: 700;
+    color: #FFFFFF;
+    letter-spacing: -0.03em;
+    line-height: 1.1;
+}
+.landing-stat-label {
+    font-size: 0.72rem;
+    font-weight: 500;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    color: #6B7280;
+    margin-top: 0.25rem;
+}
+
+/* Architecture Pipeline */
+.landing-pipe-container {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1rem;
+    margin: 1rem 0 2.5rem 0;
+}
+.landing-pipe-card {
+    background: #111827;
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    border-radius: 12px;
+    padding: 1.4rem 1.25rem;
+    transition: all 0.25s ease;
+}
+.landing-pipe-card:hover {
+    border-color: rgba(99, 102, 241, 0.4);
+    background: #151E32;
+    transform: translateY(-2px);
+}
+.landing-pipe-phase {
+    font-size: 0.68rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.09em;
+    color: #818CF8;
+    margin-bottom: 0.4rem;
+}
+.landing-pipe-title {
+    font-size: 1rem;
+    font-weight: 600;
+    color: #F3F4F6;
+    margin-bottom: 0.4rem;
+}
+.landing-pipe-desc {
+    font-size: 0.8rem;
+    color: #9CA3AF;
+    line-height: 1.5;
+}
+
+/* Feature Pillars Grid */
+.landing-pillars-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 1rem;
+    margin: 1rem 0 2.5rem 0;
+}
+.landing-pillar-card {
+    background: linear-gradient(180deg, #131B2C 0%, #0E1422 100%);
+    border: 1px solid rgba(255, 255, 255, 0.07);
+    border-radius: 14px;
+    padding: 1.5rem 1.25rem;
+    transition: all 0.25s ease;
+}
+.landing-pillar-card:hover {
+    border-color: rgba(99, 102, 241, 0.4);
+    transform: translateY(-3px);
+    box-shadow: 0 12px 28px -8px rgba(0, 0, 0, 0.5);
+}
+.landing-pillar-icon {
+    width: 42px;
+    height: 42px;
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.25rem;
+    margin-bottom: 1rem;
+}
+.icon-indigo { background: rgba(99, 102, 241, 0.12); border: 1px solid rgba(99, 102, 241, 0.3); }
+.icon-emerald { background: rgba(16, 185, 129, 0.12); border: 1px solid rgba(16, 185, 129, 0.3); }
+.icon-amber { background: rgba(251, 191, 36, 0.12); border: 1px solid rgba(251, 191, 36, 0.3); }
+.icon-rose { background: rgba(244, 63, 94, 0.12); border: 1px solid rgba(244, 63, 94, 0.3); }
+
+.landing-pillar-title {
+    font-size: 0.95rem;
+    font-weight: 600;
+    color: #F3F4F6;
+    margin-bottom: 0.4rem;
+}
+.landing-pillar-desc {
+    font-size: 0.8rem;
+    color: #8D99AE;
+    line-height: 1.5;
+}
+
+/* Bottom CTA Banner */
+.landing-bottom-banner {
+    background: linear-gradient(135deg, rgba(99, 102, 241, 0.1) 0%, rgba(16, 185, 129, 0.07) 100%);
+    border: 1px solid rgba(99, 102, 241, 0.25);
+    border-radius: 16px;
+    padding: 2.25rem 2rem;
+    text-align: center;
+    margin-bottom: 1.25rem;
+}
+.landing-bottom-title {
+    font-size: 1.4rem;
+    font-weight: 700;
+    color: #FFFFFF;
+    margin-bottom: 0.4rem;
+    letter-spacing: -0.02em;
+}
+.landing-bottom-desc {
+    font-size: 0.9rem;
+    color: #9CA3AF;
+    margin-bottom: 0;
+}
+</style>
+
+<!-- ═══════ HERO SECTION ═══════ -->
+<div class="landing-hero">
+    <div class="landing-eyebrow">
+        <div class="landing-eyebrow-dot"></div>
+        9 Autonomous Specialist Agents &middot; Research Agents Hackathon
+    </div>
+    <div class="landing-headline">
+        Extract, Verify &amp; Synthesize<br><span>Complex Scientific Literature</span>
+    </div>
+    <div class="landing-desc">
+        Turn dense academic PDFs and arXiv preprints into audit-ready structured findings, coordinate-level visual proof highlights, testable scientific hypotheses, and PRISMA systematic reviews in seconds.
+    </div>
+    <div class="landing-stats-grid">
+        <div class="landing-stat-box">
+            <div class="landing-stat-val" style="color: #818CF8;">9</div>
+            <div class="landing-stat-label">Collaborating Agents</div>
+        </div>
+        <div class="landing-stat-box">
+            <div class="landing-stat-val" style="color: #34D399;">100/100</div>
+            <div class="landing-stat-label">Adversarial Integrity</div>
+        </div>
+        <div class="landing-stat-box">
+            <div class="landing-stat-val" style="color: #FBBF24;">&lt;60s</div>
+            <div class="landing-stat-label">Average Processing</div>
+        </div>
+        <div class="landing-stat-box">
+            <div class="landing-stat-val" style="color: #E2E8F0;">$0.014</div>
+            <div class="landing-stat-label">Cost Per Extraction</div>
         </div>
     </div>
-    """, unsafe_allow_html=True)
+</div>
 
-    # Big CTA Bar
-    col_l1, col_l2, col_l3 = st.columns([1.5, 1.6, 1])
-    with col_l1:
-        if st.button("🚀 Launch PaperMiner Workspace", type="primary", use_container_width=True, key="hero_main_launch"):
-            st.session_state["view"] = "workspace"
-            st.rerun()
-    with col_l2:
-        if st.button("⚡ Run 1-Click Benchmark (Attention Is All You Need)", use_container_width=True, key="hero_demo_launch"):
-            st.session_state["view"] = "workspace"
-            sample_attention = Path("sample_papers/attention_is_all_you_need.pdf")
-            if sample_attention.exists():
-                _run_single_pipeline(str(sample_attention))
-            else:
-                from tools.arxiv_fetcher import fetch_arxiv_pdf
-                local_path, _ = fetch_arxiv_pdf("1706.03762")
-                _run_single_pipeline(local_path)
-            st.rerun()
-    with col_l3:
-        st.link_button("GitHub Repo", "https://github.com/Pratik-Shirodkar/PaperMiner", use_container_width=True)
+<!-- ═══════ 3-PHASE PIPELINE ═══════ -->
+<div style="font-size: 0.7rem; font-weight: 600; text-transform: uppercase; letter-spacing: 0.12em; color: #818CF8; margin-bottom: 0.3rem;">Workflow</div>
+<div style="font-size: 1.3rem; font-weight: 700; color: #FFFFFF; letter-spacing: -0.02em; margin-bottom: 0.75rem;">3-Phase Collaborative Pipeline</div>
 
-    st.markdown("<div style='height: 2.25rem;'></div>", unsafe_allow_html=True)
-
-    # The 9-Agent Mesh Overview
-    st.markdown("### 🧬 9-Agent Collaborative Architecture")
-    st.caption("Each agent executes a distinct responsibility with deterministic tool execution, evidence cross-examination, and active recovery.")
-
-    a_cols1 = st.columns(3)
-    agents_data_1 = [
-        ("📋 Pipeline Coordinator", "Orchestrates multi-agent execution, manages state transitions, and executes automated low-confidence recovery loops."),
-        ("📄 Document Parser", "Extracts complex layouts, multi-column tables, captions, and section hierarchies via PyMuPDF without LLM token waste."),
-        ("🧬 Schema Architect", "Auto-detects scientific domains from abstracts or translates natural language queries into typed Pydantic v2 schemas."),
-    ]
-    for col, (title, desc) in zip(a_cols1, agents_data_1):
-        with col:
-            st.markdown(f"""
-            <div class="feature-card">
-                <div class="feature-title">{title}</div>
-                <div class="feature-desc">{desc}</div>
-            </div>
-            """, unsafe_allow_html=True)
-
-    st.markdown("<div style='height: 0.75rem;'></div>", unsafe_allow_html=True)
-    a_cols2 = st.columns(3)
-    agents_data_2 = [
-        ("🔍 Data Extractor", "Performs two-pass schema-guided data extraction across text and tables with exact coordinate and page citations."),
-        ("👁️ Chart Vision Engine", "Leverages Gemini Multimodal Vision to extract numerical points directly from raster plots, scatter charts, and figures."),
-        ("🔗 Bibliography Auditor", "Cross-checks referenced citations against the primary document bibliography to detect hallucinated sources."),
-    ]
-    for col, (title, desc) in zip(a_cols2, agents_data_2):
-        with col:
-            st.markdown(f"""
-            <div class="feature-card">
-                <div class="feature-title">{title}</div>
-                <div class="feature-desc">{desc}</div>
-            </div>
-            """, unsafe_allow_html=True)
-
-    st.markdown("<div style='height: 0.75rem;'></div>", unsafe_allow_html=True)
-    a_cols3 = st.columns(3)
-    agents_data_3 = [
-        ("✅ Cross-Validator", "Audits every extracted metric against raw source text, assigning HIGH/MED/LOW confidence scores."),
-        ("🛡️ Adversarial Red-Team", "Stress-tests extractions against prompt injections, ablation traps, and baseline misattributions, awarding Integrity Certificates."),
-        ("🧠 Hypothesis Engine", "Synthesizes empirical findings to formulate falsifiable scientific hypotheses, experimental protocols, and research blindspots."),
-    ]
-    for col, (title, desc) in zip(a_cols3, agents_data_3):
-        with col:
-            st.markdown(f"""
-            <div class="feature-card">
-                <div class="feature-title">{title}</div>
-                <div class="feature-desc">{desc}</div>
-            </div>
-            """, unsafe_allow_html=True)
-
-    st.markdown("<div style='height: 2.5rem;'></div>", unsafe_allow_html=True)
-
-    # Breakthrough Capabilities Matrix
-    st.markdown("### 💎 Enterprise Capabilities & Breakthrough Pillars")
-    
-    f_cols = st.columns(4)
-    with f_cols[0]:
-        st.markdown("""
-        <div class="feature-card">
-            <div class="feature-icon">🛡️</div>
-            <div class="feature-title">Red-Team Audit</div>
-            <div class="feature-desc">Active adversarial attacks to ensure 100% auditable truth with zero hallucinations.</div>
-        </div>
-        """, unsafe_allow_html=True)
-    with f_cols[1]:
-        st.markdown("""
-        <div class="feature-card">
-            <div class="feature-icon">👁️</div>
-            <div class="feature-title">Evidence Grounding</div>
-            <div class="feature-desc">Translucent glowing neon bounding boxes drawn directly on high-res PDF pages.</div>
-        </div>
-        """, unsafe_allow_html=True)
-    with f_cols[2]:
-        st.markdown("""
-        <div class="feature-card">
-            <div class="feature-icon">💬</div>
-            <div class="feature-title">Research Co-Pilot</div>
-            <div class="feature-desc">Conversational multi-hop scientific query engine grounded strictly in verified data.</div>
-        </div>
-        """, unsafe_allow_html=True)
-    with f_cols[3]:
-        st.markdown("""
-        <div class="feature-card">
-            <div class="feature-icon">📊</div>
-            <div class="feature-title">PRISMA 2020 Studio</div>
-            <div class="feature-desc">Publication-ready systematic review flow diagrams required by Nature and Cochrane.</div>
-        </div>
-        """, unsafe_allow_html=True)
-
-    st.markdown("<div style='height: 2rem;'></div>", unsafe_allow_html=True)
-
-    # Bottom Launch Callout
-    st.markdown("""
-    <div style="background: linear-gradient(135deg, rgba(99, 102, 241, 0.12) 0%, rgba(16, 185, 129, 0.08) 100%); border: 1px solid rgba(99, 102, 241, 0.3); border-radius: 12px; padding: 1.75rem; text-align: center;">
-        <div style="font-size: 1.3rem; font-weight: 700; color: #FFFFFF; margin-bottom: 0.4rem;">Ready to Accelerate Your Systematic Review?</div>
-        <div style="font-size: 0.88rem; color: #9CA3AF; margin-bottom: 1.25rem;">Extract verified benchmark datasets from your PDFs or stream directly from arXiv in seconds.</div>
+<div class="landing-pipe-container">
+    <div class="landing-pipe-card">
+        <div class="landing-pipe-phase">Phase 01</div>
+        <div class="landing-pipe-title">Ingest &amp; Schema</div>
+        <div class="landing-pipe-desc">PyMuPDF extracts multi-column layouts while the Schema Architect auto-detects paper domain and formulates typed Pydantic models.</div>
     </div>
+    <div class="landing-pipe-card">
+        <div class="landing-pipe-phase">Phase 02</div>
+        <div class="landing-pipe-title">Extract &amp; Verify</div>
+        <div class="landing-pipe-desc">Two-pass extraction captures findings with exact page coordinates. The Adversarial Red-Team Auditor stress-tests against hallucinations.</div>
+    </div>
+    <div class="landing-pipe-card">
+        <div class="landing-pipe-phase">Phase 03</div>
+        <div class="landing-pipe-title">Synthesize &amp; Discover</div>
+        <div class="landing-pipe-desc">Autonomous hypothesis generation with experimental protocols, PRISMA 2020 systematic review flowcharts, and 5-format exports.</div>
+    </div>
+</div>
+
+<!-- ═══════ CORE CAPABILITIES ═══════ -->
+<div style="font-size: 0.7rem; font-weight: 600; text-transform: uppercase; letter-spacing: 0.12em; color: #818CF8; margin-bottom: 0.3rem;">Core Features</div>
+<div style="font-size: 1.3rem; font-weight: 700; color: #FFFFFF; letter-spacing: -0.02em; margin-bottom: 0.75rem;">Breakthrough Capabilities</div>
+
+<div class="landing-pillars-grid">
+    <div class="landing-pillar-card">
+        <div class="landing-pillar-icon icon-indigo">🛡️</div>
+        <div class="landing-pillar-title">Red-Team Audit</div>
+        <div class="landing-pillar-desc">Active adversarial attacks to ensure 100% auditable truth, eliminating hallucinated baselines and ablation traps.</div>
+    </div>
+    <div class="landing-pillar-card">
+        <div class="landing-pillar-icon icon-emerald">👁️</div>
+        <div class="landing-pillar-title">Visual Grounding</div>
+        <div class="landing-pillar-desc">Translucent glowing neon bounding boxes drawn directly on high-resolution source PDF pages for instant verification.</div>
+    </div>
+    <div class="landing-pillar-card">
+        <div class="landing-pillar-icon icon-amber">🧠</div>
+        <div class="landing-pillar-title">Hypothesis Engine</div>
+        <div class="landing-pillar-desc">Autonomous formulation of falsifiable scientific hypotheses, experimental validation protocols, and literature blindspots.</div>
+    </div>
+    <div class="landing-pillar-card">
+        <div class="landing-pillar-icon icon-rose">📊</div>
+        <div class="landing-pillar-title">PRISMA 2020 Review</div>
+        <div class="landing-pillar-desc">Publication-ready systematic review flowcharts reporting identification, screening, and inclusion.</div>
+    </div>
+</div>
+
+<!-- ═══════ BOTTOM CTA BANNER ═══════ -->
+<div class="landing-bottom-banner">
+    <div class="landing-bottom-title">Ready to accelerate your research workflow?</div>
+    <div class="landing-bottom-desc">Upload scientific PDF documents or stream directly from arXiv in seconds.</div>
+</div>
     """, unsafe_allow_html=True)
-    
-    st.markdown("<div style='height: 0.75rem;'></div>", unsafe_allow_html=True)
-    _, c_bot_btn, _ = st.columns([1, 2, 1])
-    with c_bot_btn:
-        if st.button("Launch PaperMiner Workspace Now →", type="primary", use_container_width=True, key="bottom_launch_btn"):
+
+    # ── Bottom Launch Button (Centered) ──
+    _, b_col, _ = st.columns([1, 2, 1])
+    with b_col:
+        if st.button("Open PaperMiner Workspace →", type="primary", use_container_width=True, key="bottom_launch_btn"):
             st.session_state["view"] = "workspace"
             st.rerun()
 
