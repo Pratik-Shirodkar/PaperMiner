@@ -20,6 +20,7 @@ from agents.citation import CitationAgent
 from agents.schema_builder import SchemaBuilderAgent
 from agents.synthesis import SynthesisAgent
 from agents.red_team import RedTeamAgent
+from agents.hypothesis import HypothesisAgent
 from schemas.base import ExtractionSchema
 from schemas.presets import PRESET_SCHEMAS, get_schema
 from tools.pdf_tools import ParsedDocument
@@ -34,7 +35,7 @@ class OrchestratorAgent(BaseAgent):
     Responsibilities:
     - Receives user requests (PDF + schema)
     - Plans extraction strategy
-    - Dispatches tasks to Parser → Extractor → Validator (+ Vision, Citation, Red-Team)
+    - Dispatches tasks to Parser → Extractor → Validator (+ Vision, Citation, Red-Team, Hypothesis)
     - Handles retry logic when Validator flags issues
     - Assembles and exports final results
     - Batch mode: process multiple PDFs and synthesize results
@@ -60,6 +61,7 @@ class OrchestratorAgent(BaseAgent):
         self.schema_builder = SchemaBuilderAgent(cost_tracker=self._cost_tracker)
         self.synthesis = SynthesisAgent(cost_tracker=self._cost_tracker)
         self.red_team = RedTeamAgent(cost_tracker=self._cost_tracker)
+        self.hypothesis = HypothesisAgent(cost_tracker=self._cost_tracker)
 
     # ──────────────────────────────────────────────
     # SINGLE-PDF PIPELINE
@@ -256,6 +258,22 @@ class OrchestratorAgent(BaseAgent):
             except Exception as e:
                 _progress("red_team", f"⚠ Red-team audit skipped: {e}")
 
+        # ─── STEP 4.9: AUTONOMOUS HYPOTHESIS & RESEARCH GAP GENERATION ───
+        hypothesis_results: dict = {}
+        if extractions:
+            _progress("hypothesis", "Hypothesis Generator: Formulating testable hypotheses & research gaps...")
+            try:
+                hypothesis_results = self.hypothesis.generate_hypotheses(
+                    extractions=extractions,
+                    schema=schema,
+                    document_context=parsed_doc.raw_text,
+                )
+                h_cnt = len(hypothesis_results.get("hypotheses", []))
+                g_cnt = len(hypothesis_results.get("research_gaps", []))
+                _progress("hypothesis", f"✓ Formulated {h_cnt} testable hypotheses & identified {g_cnt} research gaps")
+            except Exception as e:
+                _progress("hypothesis", f"⚠ Hypothesis generation skipped: {e}")
+
         # ─── STEP 5: ASSEMBLE RESULTS ───
         _progress("assembling", "Orchestrator: Assembling final results...")
 
@@ -265,6 +283,7 @@ class OrchestratorAgent(BaseAgent):
         result["vision_records"] = len(vision_records)
         result["citation_results"] = citation_results
         result["red_team_audit"] = red_team_results
+        result["hypothesis_engine"] = hypothesis_results
         result["pdf_path"] = pdf_path
 
         total_time = time.time() - start_time
