@@ -343,19 +343,19 @@ def _inject_design_system():
 
 # ══════════════════════════════════════════════════════════
 # ══════════════════════════════════════════════════════════
-# LANDING PAGE VIEW
+# LANDING PAGE VIEW (Comprehensive & User-Friendly)
 # ══════════════════════════════════════════════════════════
 
 def _render_landing_page():
-    # ── Top Navigation Bar: Brand on Left, Square Launch Button on Right ──
+    # ── Top Navigation Bar: Brand Left, Square Launch Button Right ──
     nav_col_left, nav_col_right = st.columns([3.8, 1.2])
     with nav_col_left:
         st.markdown("""
         <div style="display: flex; align-items: center; gap: 0.75rem; padding: 0.4rem 0;">
-            <div style="width: 32px; height: 32px; border-radius: 8px; background: linear-gradient(135deg, #6366F1, #10B981); display: flex; align-items: center; justify-content: center; font-size: 1rem; box-shadow: 0 0 14px rgba(99, 102, 241, 0.4);">⚡</div>
+            <div style="width: 34px; height: 34px; border-radius: 9px; background: linear-gradient(135deg, #6366F1, #10B981); display: flex; align-items: center; justify-content: center; font-size: 1.05rem; box-shadow: 0 0 16px rgba(99, 102, 241, 0.45);">⚡</div>
             <div>
-                <span style="font-size: 1.35rem; font-weight: 700; color: #FFFFFF; letter-spacing: -0.03em;">PaperMiner</span>
-                <span style="font-size: 0.75rem; color: #818CF8; font-weight: 500; margin-left: 0.5rem; background: rgba(99, 102, 241, 0.12); padding: 0.15rem 0.5rem; border-radius: 12px; border: 1px solid rgba(99, 102, 241, 0.25);">Research Agents Suite</span>
+                <span style="font-size: 1.4rem; font-weight: 700; color: #FFFFFF; letter-spacing: -0.03em;">PaperMiner</span>
+                <span style="font-size: 0.75rem; color: #818CF8; font-weight: 600; margin-left: 0.5rem; background: rgba(99, 102, 241, 0.12); padding: 0.18rem 0.55rem; border-radius: 12px; border: 1px solid rgba(99, 102, 241, 0.28);">Research Agents Suite</span>
             </div>
         </div>
         """, unsafe_allow_html=True)
@@ -364,27 +364,27 @@ def _render_landing_page():
             st.session_state["view"] = "workspace"
             st.rerun()
 
-    # ── Main Landing Body ──
+    # ── Main Landing Content & Styling ──
     st.markdown("""
 <style>
 @keyframes pulseDot {
-    0%, 100% { opacity: 0.5; transform: scale(0.95); }
-    50% { opacity: 1; transform: scale(1.1); }
+    0%, 100% { opacity: 0.4; transform: scale(0.95); }
+    50% { opacity: 1; transform: scale(1.15); }
 }
 .landing-hero {
     position: relative;
-    background: linear-gradient(160deg, #111827 0%, #0c1220 50%, #080c14 100%);
+    background: linear-gradient(165deg, #111827 0%, #0c1220 50%, #080c14 100%);
     border: 1px solid rgba(255, 255, 255, 0.09);
     border-radius: 18px;
-    padding: 3.25rem 2.75rem 2.5rem 2.75rem;
-    margin: 1rem 0 2.25rem 0;
-    box-shadow: 0 20px 40px -15px rgba(0, 0, 0, 0.6);
+    padding: 3.5rem 3rem 2.75rem 3rem;
+    margin: 1rem 0 2.5rem 0;
+    box-shadow: 0 20px 45px -15px rgba(0, 0, 0, 0.7);
 }
 .landing-eyebrow {
     display: inline-flex;
     align-items: center;
     gap: 0.5rem;
-    font-size: 0.72rem;
+    font-size: 0.73rem;
     font-weight: 600;
     text-transform: uppercase;
     letter-spacing: 0.1em;
@@ -396,21 +396,21 @@ def _render_landing_page():
     margin-bottom: 1.25rem;
 }
 .landing-eyebrow-dot {
-    width: 6px;
-    height: 6px;
+    width: 7px;
+    height: 7px;
     border-radius: 50%;
     background-color: #10B981;
-    box-shadow: 0 0 8px #10B981;
+    box-shadow: 0 0 10px #10B981;
     animation: pulseDot 2s ease-in-out infinite;
 }
 .landing-headline {
-    font-size: 2.65rem;
+    font-size: 2.75rem;
     font-weight: 800;
     letter-spacing: -0.04em;
-    line-height: 1.18;
+    line-height: 1.16;
     color: #FFFFFF;
-    margin-bottom: 1rem;
-    max-width: 820px;
+    margin-bottom: 1.1rem;
+    max-width: 840px;
 }
 .landing-headline span {
     background: linear-gradient(135deg, #818CF8 0%, #34D399 100%);
@@ -418,24 +418,21 @@ def _render_landing_page():
     -webkit-text-fill-color: transparent;
 }
 .landing-desc {
-    font-size: 1.02rem;
+    font-size: 1.05rem;
     color: #9CA3AF;
-    line-height: 1.65;
-    max-width: 740px;
+    line-height: 1.7;
+    max-width: 780px;
     margin-bottom: 2rem;
 }
 .landing-stats-grid {
     display: grid;
     grid-template-columns: repeat(4, 1fr);
-    gap: 1.25rem;
+    gap: 1.5rem;
     padding-top: 1.75rem;
-    border-top: 1px solid rgba(255, 255, 255, 0.07);
-}
-.landing-stat-box {
-    text-align: left;
+    border-top: 1px solid rgba(255, 255, 255, 0.08);
 }
 .landing-stat-val {
-    font-size: 1.75rem;
+    font-size: 1.85rem;
     font-weight: 700;
     color: #FFFFFF;
     letter-spacing: -0.03em;
@@ -450,109 +447,182 @@ def _render_landing_page():
     margin-top: 0.25rem;
 }
 
-/* Architecture Pipeline */
-.landing-pipe-container {
+/* Comparison Cards (Problem vs Solution) */
+.comparison-grid {
     display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 1rem;
-    margin: 1rem 0 2.5rem 0;
+    grid-template-columns: 1fr 1fr;
+    gap: 1.25rem;
+    margin: 1.25rem 0 2.75rem 0;
 }
-.landing-pipe-card {
-    background: #111827;
-    border: 1px solid rgba(255, 255, 255, 0.08);
-    border-radius: 12px;
-    padding: 1.4rem 1.25rem;
-    transition: all 0.25s ease;
+.comp-card-bad {
+    background: rgba(239, 68, 68, 0.04);
+    border: 1px solid rgba(239, 68, 68, 0.2);
+    border-radius: 14px;
+    padding: 1.5rem 1.4rem;
 }
-.landing-pipe-card:hover {
-    border-color: rgba(99, 102, 241, 0.4);
-    background: #151E32;
-    transform: translateY(-2px);
+.comp-card-good {
+    background: rgba(16, 185, 129, 0.05);
+    border: 1px solid rgba(16, 185, 129, 0.25);
+    border-radius: 14px;
+    padding: 1.5rem 1.4rem;
 }
-.landing-pipe-phase {
-    font-size: 0.68rem;
-    font-weight: 700;
-    text-transform: uppercase;
-    letter-spacing: 0.09em;
-    color: #818CF8;
-    margin-bottom: 0.4rem;
-}
-.landing-pipe-title {
-    font-size: 1rem;
-    font-weight: 600;
-    color: #F3F4F6;
-    margin-bottom: 0.4rem;
-}
-.landing-pipe-desc {
-    font-size: 0.8rem;
-    color: #9CA3AF;
-    line-height: 1.5;
-}
+.comp-title-bad { font-size: 1rem; font-weight: 700; color: #F87171; margin-bottom: 0.85rem; display: flex; align-items: center; gap: 0.4rem; }
+.comp-title-good { font-size: 1rem; font-weight: 700; color: #34D399; margin-bottom: 0.85rem; display: flex; align-items: center; gap: 0.4rem; }
+.comp-item { font-size: 0.84rem; color: #9CA3AF; margin-bottom: 0.6rem; line-height: 1.5; display: flex; align-items: flex-start; gap: 0.5rem; }
 
-/* Feature Pillars Grid */
-.landing-pillars-grid {
+/* How It Works Steps (4-Step Horizontal) */
+.steps-grid {
     display: grid;
     grid-template-columns: repeat(4, 1fr);
     gap: 1rem;
-    margin: 1rem 0 2.5rem 0;
+    margin: 1.25rem 0 2.75rem 0;
 }
-.landing-pillar-card {
-    background: linear-gradient(180deg, #131B2C 0%, #0E1422 100%);
-    border: 1px solid rgba(255, 255, 255, 0.07);
-    border-radius: 14px;
-    padding: 1.5rem 1.25rem;
+.step-card {
+    background: #111827;
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    border-radius: 12px;
+    padding: 1.4rem 1.2rem;
+    position: relative;
     transition: all 0.25s ease;
 }
-.landing-pillar-card:hover {
-    border-color: rgba(99, 102, 241, 0.4);
+.step-card:hover {
+    background: #162035;
+    border-color: rgba(99, 102, 241, 0.45);
     transform: translateY(-3px);
-    box-shadow: 0 12px 28px -8px rgba(0, 0, 0, 0.5);
 }
-.landing-pillar-icon {
-    width: 42px;
-    height: 42px;
-    border-radius: 10px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 1.25rem;
-    margin-bottom: 1rem;
+.step-num {
+    font-size: 0.7rem;
+    font-weight: 700;
+    color: #818CF8;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    margin-bottom: 0.5rem;
 }
-.icon-indigo { background: rgba(99, 102, 241, 0.12); border: 1px solid rgba(99, 102, 241, 0.3); }
-.icon-emerald { background: rgba(16, 185, 129, 0.12); border: 1px solid rgba(16, 185, 129, 0.3); }
-.icon-amber { background: rgba(251, 191, 36, 0.12); border: 1px solid rgba(251, 191, 36, 0.3); }
-.icon-rose { background: rgba(244, 63, 94, 0.12); border: 1px solid rgba(244, 63, 94, 0.3); }
-
-.landing-pillar-title {
-    font-size: 0.95rem;
+.step-title {
+    font-size: 0.96rem;
     font-weight: 600;
-    color: #F3F4F6;
+    color: #FFFFFF;
     margin-bottom: 0.4rem;
 }
-.landing-pillar-desc {
+.step-desc {
     font-size: 0.8rem;
     color: #8D99AE;
     line-height: 1.5;
 }
 
+/* Domain Use Cases Grid */
+.domain-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1.15rem;
+    margin: 1.25rem 0 2.75rem 0;
+}
+.domain-card {
+    background: linear-gradient(180deg, #131B2C 0%, #0E1422 100%);
+    border: 1px solid rgba(255, 255, 255, 0.07);
+    border-radius: 14px;
+    padding: 1.5rem 1.35rem;
+    transition: all 0.25s ease;
+}
+.domain-card:hover {
+    border-color: rgba(99, 102, 241, 0.4);
+    transform: translateY(-3px);
+}
+.domain-icon {
+    font-size: 1.4rem;
+    margin-bottom: 0.6rem;
+}
+.domain-title {
+    font-size: 1rem;
+    font-weight: 600;
+    color: #FFFFFF;
+    margin-bottom: 0.4rem;
+}
+.domain-desc {
+    font-size: 0.82rem;
+    color: #9CA3AF;
+    line-height: 1.55;
+    margin-bottom: 0.75rem;
+}
+.domain-tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.35rem;
+}
+.domain-tag {
+    font-size: 0.68rem;
+    color: #818CF8;
+    background: rgba(99, 102, 241, 0.1);
+    border: 1px solid rgba(99, 102, 241, 0.2);
+    border-radius: 4px;
+    padding: 0.12rem 0.4rem;
+    font-family: 'JetBrains Mono', monospace;
+}
+
+/* FAQ Accordion Box */
+.faq-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1rem;
+    margin: 1.25rem 0 2.75rem 0;
+}
+.faq-card {
+    background: #111827;
+    border: 1px solid rgba(255, 255, 255, 0.07);
+    border-radius: 12px;
+    padding: 1.35rem 1.25rem;
+}
+.faq-q {
+    font-size: 0.92rem;
+    font-weight: 600;
+    color: #F3F4F6;
+    margin-bottom: 0.4rem;
+}
+.faq-a {
+    font-size: 0.81rem;
+    color: #8D99AE;
+    line-height: 1.55;
+}
+
+/* Section Headings */
+.sec-tag {
+    font-size: 0.7rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+    color: #818CF8;
+    margin-bottom: 0.25rem;
+}
+.sec-title {
+    font-size: 1.45rem;
+    font-weight: 700;
+    color: #FFFFFF;
+    letter-spacing: -0.02em;
+}
+.sec-desc {
+    font-size: 0.88rem;
+    color: #9CA3AF;
+    margin-bottom: 0.5rem;
+}
+
 /* Bottom CTA Banner */
 .landing-bottom-banner {
-    background: linear-gradient(135deg, rgba(99, 102, 241, 0.1) 0%, rgba(16, 185, 129, 0.07) 100%);
-    border: 1px solid rgba(99, 102, 241, 0.25);
+    background: linear-gradient(135deg, rgba(99, 102, 241, 0.12) 0%, rgba(16, 185, 129, 0.08) 100%);
+    border: 1px solid rgba(99, 102, 241, 0.3);
     border-radius: 16px;
-    padding: 2.25rem 2rem;
+    padding: 2.5rem 2rem;
     text-align: center;
     margin-bottom: 1.25rem;
 }
 .landing-bottom-title {
-    font-size: 1.4rem;
+    font-size: 1.5rem;
     font-weight: 700;
     color: #FFFFFF;
     margin-bottom: 0.4rem;
     letter-spacing: -0.02em;
 }
 .landing-bottom-desc {
-    font-size: 0.9rem;
+    font-size: 0.92rem;
     color: #9CA3AF;
     margin-bottom: 0;
 }
@@ -562,87 +632,150 @@ def _render_landing_page():
 <div class="landing-hero">
     <div class="landing-eyebrow">
         <div class="landing-eyebrow-dot"></div>
-        9 Autonomous Specialist Agents &middot; Research Agents Hackathon
+        9 Collaborating AI Agents &middot; Research Agents Hackathon
     </div>
     <div class="landing-headline">
-        Extract, Verify &amp; Synthesize<br><span>Complex Scientific Literature</span>
+        Turn 30-Page Research Papers into<br><span>Verified, Actionable Data in 60 Seconds</span>
     </div>
     <div class="landing-desc">
-        Turn dense academic PDFs and arXiv preprints into audit-ready structured findings, coordinate-level visual proof highlights, testable scientific hypotheses, and PRISMA systematic reviews in seconds.
+        Conducting systematic literature reviews or meta-analyses manually takes weeks of painstaking reading. Generic LLMs hallucinate numbers and mix up baselines. PaperMiner coordinates 9 specialized AI agents to extract exact data tables, visually highlight source citations on original PDF pages, stress-test extractions against errors, and formulate falsifiable scientific hypotheses.
     </div>
     <div class="landing-stats-grid">
-        <div class="landing-stat-box">
-            <div class="landing-stat-val" style="color: #818CF8;">9</div>
-            <div class="landing-stat-label">Collaborating Agents</div>
+        <div>
+            <div class="landing-stat-val" style="color: #818CF8;">9 Agents</div>
+            <div class="landing-stat-label">Collaborative Mesh</div>
         </div>
-        <div class="landing-stat-box">
-            <div class="landing-stat-val" style="color: #34D399;">100/100</div>
+        <div>
+            <div class="landing-stat-val" style="color: #34D399;">100% Visual</div>
+            <div class="landing-stat-label">PDF Coordinate Proof</div>
+        </div>
+        <div>
+            <div class="landing-stat-val" style="color: #FBBF24;">100/100</div>
             <div class="landing-stat-label">Adversarial Integrity</div>
         </div>
-        <div class="landing-stat-box">
-            <div class="landing-stat-val" style="color: #FBBF24;">&lt;60s</div>
-            <div class="landing-stat-label">Average Processing</div>
-        </div>
-        <div class="landing-stat-box">
-            <div class="landing-stat-val" style="color: #E2E8F0;">$0.014</div>
-            <div class="landing-stat-label">Cost Per Extraction</div>
+        <div>
+            <div class="landing-stat-val" style="color: #E2E8F0;">&lt;60s &middot; $0.01</div>
+            <div class="landing-stat-label">Avg Speed &amp; Cost</div>
         </div>
     </div>
 </div>
 
-<!-- ═══════ 3-PHASE PIPELINE ═══════ -->
-<div style="font-size: 0.7rem; font-weight: 600; text-transform: uppercase; letter-spacing: 0.12em; color: #818CF8; margin-bottom: 0.3rem;">Workflow</div>
-<div style="font-size: 1.3rem; font-weight: 700; color: #FFFFFF; letter-spacing: -0.02em; margin-bottom: 0.75rem;">3-Phase Collaborative Pipeline</div>
+<!-- ═══════ THE PROBLEM VS SOLUTION ═══════ -->
+<div class="sec-tag">Why PaperMiner?</div>
+<div class="sec-title">The Difference Between Hallucination and Auditable Science</div>
+<div class="sec-desc">How PaperMiner solves the fundamental bottlenecks of academic literature extraction:</div>
 
-<div class="landing-pipe-container">
-    <div class="landing-pipe-card">
-        <div class="landing-pipe-phase">Phase 01</div>
-        <div class="landing-pipe-title">Ingest &amp; Schema</div>
-        <div class="landing-pipe-desc">PyMuPDF extracts multi-column layouts while the Schema Architect auto-detects paper domain and formulates typed Pydantic models.</div>
+<div class="comparison-grid">
+    <div class="comp-card-bad">
+        <div class="comp-title-bad">❌ The Old Way (Manual &amp; Generic LLMs)</div>
+        <div class="comp-item"><span>⚠️</span> <strong>Weeks of manual data entry</strong> across dozens of multi-column PDFs with high human fatigue and transcription error.</div>
+        <div class="comp-item"><span>⚠️</span> <strong>Generic AI wrappers hallucinate</strong> metrics, confuse ablation baselines with proposed methods, and invent plausible-sounding citations.</div>
+        <div class="comp-item"><span>⚠️</span> <strong>Zero source traceability</strong> — impossible to verify which exact table cell or paragraph an extracted metric came from without re-reading the paper.</div>
+        <div class="comp-item"><span>⚠️</span> <strong>Tedious systematic reviews</strong> — manually drawing PRISMA 2020 flowcharts for peer-reviewed journal submission.</div>
     </div>
-    <div class="landing-pipe-card">
-        <div class="landing-pipe-phase">Phase 02</div>
-        <div class="landing-pipe-title">Extract &amp; Verify</div>
-        <div class="landing-pipe-desc">Two-pass extraction captures findings with exact page coordinates. The Adversarial Red-Team Auditor stress-tests against hallucinations.</div>
-    </div>
-    <div class="landing-pipe-card">
-        <div class="landing-pipe-phase">Phase 03</div>
-        <div class="landing-pipe-title">Synthesize &amp; Discover</div>
-        <div class="landing-pipe-desc">Autonomous hypothesis generation with experimental protocols, PRISMA 2020 systematic review flowcharts, and 5-format exports.</div>
+    <div class="comp-card-good">
+        <div class="comp-title-good">✅ The PaperMiner Way (Multi-Agent Mesh)</div>
+        <div class="comp-item"><span>✨</span> <strong>Full extraction in &lt;60 seconds</strong> into typed, strictly validated Pydantic datasets for single papers or batch corpora.</div>
+        <div class="comp-item"><span>✨</span> <strong>Adversarial Red-Team Auditor</strong> actively stress-tests every number against ablation traps, issuing scored Integrity Certificates.</div>
+        <div class="comp-item"><span>✨</span> <strong>Coordinate-Level Visual Grounding</strong> — click any extracted number to render the high-res PDF page with glowing neon bounding boxes.</div>
+        <div class="comp-item"><span>✨</span> <strong>Autonomous Discovery &amp; PRISMA Studio</strong> — generates falsifiable hypotheses and publication-ready PRISMA 2020 systematic review flowcharts.</div>
     </div>
 </div>
 
-<!-- ═══════ CORE CAPABILITIES ═══════ -->
-<div style="font-size: 0.7rem; font-weight: 600; text-transform: uppercase; letter-spacing: 0.12em; color: #818CF8; margin-bottom: 0.3rem;">Core Features</div>
-<div style="font-size: 1.3rem; font-weight: 700; color: #FFFFFF; letter-spacing: -0.02em; margin-bottom: 0.75rem;">Breakthrough Capabilities</div>
+<!-- ═══════ HOW IT WORKS ═══════ -->
+<div class="sec-tag">Workflow</div>
+<div class="sec-title">How the 9-Agent Pipeline Works</div>
+<div class="sec-desc">A deterministic, multi-agent pipeline designed to guarantee accuracy at every step:</div>
 
-<div class="landing-pillars-grid">
-    <div class="landing-pillar-card">
-        <div class="landing-pillar-icon icon-indigo">🛡️</div>
-        <div class="landing-pillar-title">Red-Team Audit</div>
-        <div class="landing-pillar-desc">Active adversarial attacks to ensure 100% auditable truth, eliminating hallucinated baselines and ablation traps.</div>
+<div class="steps-grid">
+    <div class="step-card">
+        <div class="step-num">Step 01</div>
+        <div class="step-title">Ingest &amp; Auto-Schema</div>
+        <div class="step-desc">Upload any PDF or paste an arXiv ID. The Schema Architect analyzes the abstract and auto-formulates a domain-optimal typed Pydantic schema.</div>
     </div>
-    <div class="landing-pillar-card">
-        <div class="landing-pillar-icon icon-emerald">👁️</div>
-        <div class="landing-pillar-title">Visual Grounding</div>
-        <div class="landing-pillar-desc">Translucent glowing neon bounding boxes drawn directly on high-resolution source PDF pages for instant verification.</div>
+    <div class="step-card">
+        <div class="step-num">Step 02</div>
+        <div class="step-title">Parse &amp; Chart Vision</div>
+        <div class="step-desc">PyMuPDF isolates multi-column text and tables. Gemini Multimodal Vision extracts data points directly from raster plots and scatter charts.</div>
     </div>
-    <div class="landing-pillar-card">
-        <div class="landing-pillar-icon icon-amber">🧠</div>
-        <div class="landing-pillar-title">Hypothesis Engine</div>
-        <div class="landing-pillar-desc">Autonomous formulation of falsifiable scientific hypotheses, experimental validation protocols, and literature blindspots.</div>
+    <div class="step-card">
+        <div class="step-num">Step 03</div>
+        <div class="step-title">Cross-Validate &amp; Audit</div>
+        <div class="step-desc">Validator audits every metric against raw text. The Adversarial Red-Team Auditor attacks extractions against ablation traps, issuing an Integrity Certificate.</div>
     </div>
-    <div class="landing-pillar-card">
-        <div class="landing-pillar-icon icon-rose">📊</div>
-        <div class="landing-pillar-title">PRISMA 2020 Review</div>
-        <div class="landing-pillar-desc">Publication-ready systematic review flowcharts reporting identification, screening, and inclusion.</div>
+    <div class="step-card">
+        <div class="step-num">Step 04</div>
+        <div class="step-title">Discover &amp; Export</div>
+        <div class="step-desc">Hypothesis Engine formulates testable hypotheses. Chat with the Research Co-Pilot, generate PRISMA 2020 flowcharts, or export to Excel/LaTeX/JSON.</div>
+    </div>
+</div>
+
+<!-- ═══════ DOMAIN USE CASES ═══════ -->
+<div class="sec-tag">Applications</div>
+<div class="sec-title">Built for Every Scientific Domain</div>
+<div class="sec-desc">Pre-tuned schemas and auto-detection across multidisciplinary scientific research:</div>
+
+<div class="domain-grid">
+    <div class="domain-card">
+        <div class="domain-icon">🤖</div>
+        <div class="domain-title">Computer Science &amp; AI</div>
+        <div class="domain-desc">Extract benchmark performance (BLEU, GLUE, Accuracy), parameter counts, latency (ms), training FLOPs, and GPU hardware requirements across complex ablation tables.</div>
+        <div class="domain-tags">
+            <span class="domain-tag">Model Architecture</span>
+            <span class="domain-tag">BLEU Score</span>
+            <span class="domain-tag">Training FLOPs</span>
+        </div>
+    </div>
+    <div class="domain-card">
+        <div class="domain-icon">🩺</div>
+        <div class="domain-title">Clinical Oncology &amp; Medicine</div>
+        <div class="domain-desc">Mine patient cohort sizes, drug dosages, Progression-Free Survival (PFS), Hazard Ratios (HR), confidence intervals, and adverse event frequencies from clinical trials.</div>
+        <div class="domain-tags">
+            <span class="domain-tag">Cohort Size</span>
+            <span class="domain-tag">Hazard Ratio</span>
+            <span class="domain-tag">p-Value</span>
+        </div>
+    </div>
+    <div class="domain-card">
+        <div class="domain-icon">💎</div>
+        <div class="domain-title">Materials Science &amp; Physics</div>
+        <div class="domain-desc">Extract chemical composition formulas, synthesis temperatures, critical transition pressures (GPa), superconducting Tc, and crystal lattice constants from experimental papers.</div>
+        <div class="domain-tags">
+            <span class="domain-tag">Transition Temp</span>
+            <span class="domain-tag">Pressure (GPa)</span>
+            <span class="domain-tag">Crystal Phase</span>
+        </div>
+    </div>
+</div>
+
+<!-- ═══════ FREQUENTLY ASKED QUESTIONS ═══════ -->
+<div class="sec-tag">FAQ</div>
+<div class="sec-title">Frequently Asked Questions</div>
+<div class="sec-desc">Everything you need to know about how PaperMiner operates:</div>
+
+<div class="faq-grid">
+    <div class="faq-card">
+        <div class="faq-q">❓ How does PaperMiner prevent AI hallucinations?</div>
+        <div class="faq-a">Unlike single-prompt LLM wrappers, PaperMiner uses a multi-agent verification mesh. First, the Validator audits numbers against raw text. Then, an Adversarial Red-Team Auditor aggressively attacks extractions with ablation traps and baseline misattributions before awarding a certified Integrity Score.</div>
+    </div>
+    <div class="faq-card">
+        <div class="faq-q">❓ How does Visual Evidence Grounding work?</div>
+        <div class="faq-a">During layout parsing, PaperMiner preserves exact PDF coordinate bounding boxes. When you select any extracted record in the workspace, it renders the primary PDF page image with translucent glowing neon bounding boxes highlighting the exact source cell.</div>
+    </div>
+    <div class="faq-card">
+        <div class="faq-q">❓ What formats can I export the extracted data into?</div>
+        <div class="faq-a">PaperMiner supports 5 export formats with 1 click: Microsoft Excel (.xlsx), CSV, LaTeX (.tex for Overleaf and paper submissions), structured JSON, and Markdown Data Integrity Audit Certificates.</div>
+    </div>
+    <div class="faq-card">
+        <div class="faq-q">❓ Can I process multiple papers for a meta-analysis?</div>
+        <div class="faq-a">Yes! Switch to "Batch Meta-Analysis" mode in the sidebar to ingest up to 10 papers simultaneously. PaperMiner synthesizes cross-paper consensus, generates clinical forest plots, and creates PRISMA 2020 systematic review flowcharts.</div>
     </div>
 </div>
 
 <!-- ═══════ BOTTOM CTA BANNER ═══════ -->
 <div class="landing-bottom-banner">
-    <div class="landing-bottom-title">Ready to accelerate your research workflow?</div>
-    <div class="landing-bottom-desc">Upload scientific PDF documents or stream directly from arXiv in seconds.</div>
+    <div class="landing-bottom-title">Ready to transform your literature review workflow?</div>
+    <div class="landing-bottom-desc">Join researchers saving weeks of manual data entry with auditable multi-agent precision.</div>
 </div>
     """, unsafe_allow_html=True)
 
