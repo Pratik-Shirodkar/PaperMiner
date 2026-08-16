@@ -35,12 +35,13 @@
 ### 🟢 SCENE 1: The Problem & Multi-Agent Architecture
 **Duration:** 0:00 – 0:35 (35 seconds)  
 **Screen Action:**
-- `0:00` — Show PaperMiner homepage dashboard at `http://localhost:8501`.
+- `0:00` — Show PaperMiner landing page at `http://localhost:8501`.
+- `0:08` — Click the top-right **`Launch Workspace ⚡`** button to transition into the workspace.
 - `0:15` — Hover mouse cursor over the sidebar **Multi-Agent Pipeline** monitor (*Coordinator, Parser, Extractor, Validator, Adversarial Auditor*).
 
 #### 📋 Raw TTS Text (Copy-Paste):
 ```text
-Hello! Today I am presenting PaperMiner, an autonomous nine-agent AI system built for the Research Agents Hackathon.
+Hello! Today I am presenting PaperMiner, an autonomous nine-agent AI system for scientific literature extraction, verification, and systematic review.
 
 When researchers conduct systematic literature reviews or meta-analyses, manually extracting findings from dozens of research PDFs takes weeks of tedious effort, and manual extraction often misses subtle nuances or misattributes baselines.
 
@@ -50,7 +51,7 @@ PaperMiner automates this end-to-end with a specialized multi-agent architecture
 #### 🔊 Optional SSML (for Google Cloud TTS Console):
 ```xml
 <speak>
-  Hello! Today I am presenting <emphasis level="moderate">PaperMiner</emphasis>, an autonomous nine-agent AI system built for the Research Agents Hackathon.
+  Hello! Today I am presenting <emphasis level="moderate">PaperMiner</emphasis>, an autonomous nine-agent AI system for scientific literature extraction, verification, and systematic review.
   <break time="400ms"/>
   When researchers conduct systematic literature reviews or meta-analyses, manually extracting findings from dozens of research P-D-F documents takes weeks of tedious effort, and manual extraction often misses subtle nuances or misattributes baselines.
   <break time="400ms"/>
